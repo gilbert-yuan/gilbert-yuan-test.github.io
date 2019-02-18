@@ -1,0 +1,7 @@
+## python中reportlab安装
+
+python 安装reportlab库的时候 直接用pip 进行的安装总是会报错 所以选择进行源码的安装.
+https://pypi.python.org/pypi/reportlab/3.4.0
+https://pypi.python.org/simple/pillow/
+手动安装依赖不然会很慢很慢。。
+用命令行安装的reportlab 总会有各种各样的问题。。还找不到问题所在。。只能用源码安装才可以。。
