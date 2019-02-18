@@ -13,4 +13,7 @@ select * from sale_order_line where product_id = "" and order_id in ('state 为d
 如果('order_id.state', '=', 'draft')  
 
 这个条件组成的是个大表的情况下就会导致sql及其的慢。这是写法上必须注意的，当数据量小的时候没有感觉的，
+
 3.适当的时候运用 sql 代替odoo ORM 中的domain 提取.
+未完待续....
+
