@@ -9,4 +9,4 @@ from termcolor import cprint
 from pyfiglet import figlet_format
 cprint(filget_format('welcome', font='starwars'), 'yellow', 'on_blue', attrs=['bold'])
 ```
-
+![上面代码效果图](https://github.com/gilbert-yuan/gilbert-yuan-test.github.io/blob/master/jpg/DA430AC7-FFCF-4F64-AF12-BAA565174CC7.png)
