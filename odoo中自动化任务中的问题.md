@@ -5,6 +5,7 @@
 
 例如
 ```
+from odoo.http import request
 request.env['hr.holiday'].search([])
 ```
 其实这样也很方便，但是如果在自动化任务中这么调用会报错， RuntimeError： object unbound 以后使用起来也要注意；
