@@ -4,7 +4,7 @@
 自动化执行的任务的中调用了 controller 中的一个方法， 众所周知 contrloler中没有实例化的self odoo 提供了 odoo.http.request 来充当self的作用
 
 例如
-```
+```python
 from odoo.http import request
 request.env['hr.holiday'].search([])
 ```
