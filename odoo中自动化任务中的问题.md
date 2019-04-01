@@ -8,6 +8,10 @@
 from odoo.http import request
 request.env['hr.holiday'].search([])
 ```
-其实这样也很方便，`主要是自动触发的情况下会报出这个问题`     但是如果在自动化任务中这么调用会报错， RuntimeError： object unbound 以后使用起来也要注意；
+其实这样也很方便，`主要是自动触发的情况下会报出这个问题`     但是如果在自动化任务中这么调用会报错， 
+```log
+RuntimeError： object unbound 
+```
+以后使用起来也要注意；
 
 功能性方法要独立到起来，不能放在contrlloer里面这样会给调用带来不必要的麻烦
