@@ -1,8 +1,12 @@
 ## gilbert 的博客
 
 ### 经典模块推荐
-
- * 🌟🌟🌟🌟  [产品合并模块addons-vauxoo ](https://github.com/Vauxoo/addons-vauxoo/tree/8.0/product_do_merge) 推荐理由：在实际的生产应用中很可能发生产品重复命名的情况，但是在财务对账，等实际场景中是不能忍受的，所以这个模块很实用值得去学习。不足之处：升级止步于8.0版本，令人可惜
+|  推荐星级   |  模块地址    |   推荐理由  |
+|:---|:----|:-----|
+|🌟🌟🌟🌟  |[产品合并模块addons-vauxoo ](https://github.com/Vauxoo/addons-vauxoo/tree/8.0/product_do_merge)| 推荐理由：在实际的生产应用中很可能发生产品重复命名的情况，但是在财务对账，等实际场景中是不能忍受的，所以这个模块很实用值得去学习。不足之处：升级止步于8.0版本，令人可惜|
+|🌟🌟|[odoo对接钉钉模块](https://github.com/gilbert-yuan/odoo_dingding)|本人写的，主要是练手，简单对接，适合新手学习，这个模块没有运用到实际的生产环境中（还没有接受生产环境的检验），有值得学习的运用 1.单例模式 2.toke 定时获取，避免用时获取导致多次请求|
+|🌟🌟🌟|[VUX 作为前端配置出手机端页面](https://github.com/gilbert-yuan/odoo_mobile)| 也是本人写的，推荐理由开创odoo提供API 直接配置出一个前端，方便手机中显示，不足之处，页面不够美观，个别操作不是很方便|
+|🌟🌟🌟|[根据单据信息显示删除新建编辑等按钮](https://github.com/gilbert-yuan/odoo_patch)| 通过配置实现在页面上控制编辑、新建、删除等的按钮 为新手提供odoo加载的思路|
 
 
 [odoo中自动化任务中的问题](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo中自动化任务中的问题.md)
