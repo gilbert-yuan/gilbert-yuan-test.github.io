@@ -1,5 +1,5 @@
 ## gilbert 的博客
-
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 ### 经典模块推荐
 |  推荐星级   |  模块地址    |   推荐理由  |
 |:---|:----|:-----|
