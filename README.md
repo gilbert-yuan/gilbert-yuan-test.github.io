@@ -1,4 +1,4 @@
-![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)
+[996.icu](https://img.shields.io/badge/link-996.icu-red.svg)
 ## gilbert 的博客
 
 ### 经典模块推荐
