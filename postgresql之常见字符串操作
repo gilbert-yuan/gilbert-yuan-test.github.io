@@ -1,0 +1,24 @@
+
+#postgresql 常见字符串操作 -- 未完
+ 
+|   函数  |    返回值类型 | 描述  | 示例| 结果 |
+| --- | --- | -- | -- | -- | 
+|   string\|\|string  |    text | 字符串连接  | select 'Post'\|\|'gresql'\|\|' good!';| Postgresql good! |
+|    length(string,encoding name)  |    int | 以name的编码格式字符串的字符个数  | select length('中国','GBK');| 3 |
+ |   lower(string)  |    text | 将字符串转换成小写  | select lower('HeLLO');| hello |
+|   upper(string)  |   text | 将字符串转换成大写  | select lower('HellO'); | HELLO |
+|   initcap(string)  |    text | 将字符串中每个单词的首字母大写  | select initcap('hello world !');| Hello World ! |
+|   replace(string,string,string)  | text | 替换字符串，将第一个字符串中的第二个字符串替换成第三个字符串  | select replace('Txxxxas','xxxx','hom'); | Thomas |
+|   substring(stringfrom int  \[for int\])  |    text | 截取字符串，从from位置截取长度for，如果for省略，则是从from至结尾  | select substring('hello world' from 2 for 3);select substring('hello world' from 2);| ell ell world |
+| substring(string from pattern) |   text | 截取匹配posix正则表达式的字符串  | elect substring('hello world' from '...$');| rld |
+|   trim([leading \| trailing\| both][characters] from string)  |    删除字符串头部（leading）,尾部(trailing)或两边的空白活\[characters\]字符 | select trim(both 'x' from 'xxjdhdxxxx');  | 示例| jdhd |
+| chr(int) |    返回值类型 | 将数字转换成字符  | select chr(65);| A |
+|   concat(str"any" \[, str"any" \[, ...\] \])  |    返回值类型 | 连接所有参数，个数不限，类型不限 | select concat('x','man',3); | xman3 |
+
+
+
+
+
+
+
+
