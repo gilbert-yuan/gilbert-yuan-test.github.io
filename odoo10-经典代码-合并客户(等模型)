@@ -1,0 +1,168 @@
+## odoo-经典代码-合并客户(等模型)
+仅仅用来合并单个模型中的数据
+如过要合并产品，就比较复杂需要合并相关联的-计量单位等。需要另行改造(可参考
+[addons-vauxoo中product_do_merge模块 ](https://github.com/Vauxoo/addons-vauxoo/tree/11.0/product_do_merge)
+
+
+```python
+   def get_fk_on(self, table, tables=None):
+        tables = tables and tuple(tables) or []
+        where = tables and 'AND cli.relname in %s' % (str(tables))
+        query = """  SELECT cl1.relname as table,
+                        att1.attname as column
+                   FROM pg_constraint as con, pg_class as cl1, pg_class as cl2,
+                        pg_attribute as att1, pg_attribute as att2
+                  WHERE con.conrelid = cl1.oid
+                    AND con.confrelid = cl2.oid
+                    AND array_lower(con.conkey, 1) = 1
+                    AND con.conkey[1] = att1.attnum
+                    AND att1.attrelid = cl1.oid
+                    AND cl2.relname = %s
+                    AND att2.attname = 'id'
+                    AND array_lower(con.confkey, 1) = 1
+                    AND con.confkey[1] = att2.attnum
+                    AND att2.attrelid = cl2.oid
+                    AND con.contype = 'f'
+                    %s
+        """
+        return self.env.cr.execute(query, (table, tables and where or '',))
+
+    def _update_foreign_keys(self, src_mode_rows, dst_mode_row, model_name='', table_name=''):
+        mode_row_bad = []
+        cr = self.env.cr
+        self.get_fk_on(table_name)
+        for table, column in cr.fetchall():
+            if 'base_merge_partner_history' in table:
+                continue
+            mode_row_ids = tuple([int(i) for i in src_mode_rows])
+            query = """SELECT column_name FROM information_schema.columns
+                       WHERE table_name LIKE '%s'""" % (table)
+            cr.execute(query, ())
+            columns = []
+            for data in cr.fetchall():
+                if data[0] != column:
+                    columns.append(data[0])
+            query_dic = {
+                'table': table,
+                'column': column,
+                'value': columns[0],
+            }
+            # unique key treated
+            query = """
+                UPDATE "%(table)s" as ___tu
+                SET %(column)s = %%s
+                WHERE
+                    %(column)s = %%s AND
+                    NOT EXISTS (
+                        SELECT 1
+                        FROM "%(table)s" as ___tw
+                        WHERE
+                            %(column)s = %%s AND
+                            ___tu.%(value)s = ___tw.%(value)s
+                    )""" % query_dic
+            for mode_row_id in mode_row_ids:
+                cr.execute(query, (dst_mode_row.id, mode_row_id, dst_mode_row.id))
+        return mode_row_bad
+
+    def _update_reference_fields(self, src_mode_rows, dst_mode_row, model_name='res.partner', table_name=''):
+        mode_row_bad = []
+
+        def update_records(model, src, field_model='model',
+                           field_id='res_id', context=None):
+            proxy = self.env[model]
+            if proxy is None:
+                return
+            domain = [(field_model, '=', model_name), (
+                field_id, '=', src.id)]
+            ids = proxy.search(domain)
+            return proxy.write( ids, {field_id: dst_mode_row.id} )
+        proxy = self.env['ir.model.fields']
+        domain = [('ttype', '=', 'reference')]
+        for record in proxy.search(domain):
+            try:
+                proxy_model = self.env[record.model]
+                column = proxy_model[record.name]
+            except KeyError:
+                continue
+            # if isinstance(column, fields.function):
+            #     continue
+
+            for mode_row in src_mode_rows:
+                domain = [
+                    (record.name, '=', '%s,%d' % (model_name, mode_row.id))
+                ]
+                model_rows = proxy_model.search(domain)
+                values = {
+                    record.name: '%s,%d' % (model_name,  dst_mode_row.id)
+                }
+                model_rows.write(values)
+        return mode_row_bad
+
+    def _update_values(self, src_mode_rows, dst_mode_row,  model_name='res.partner', table_name=''):
+        columns = dst_mode_row._fields
+
+        def write_serializer(column, item):
+            if isinstance(item, browse_record):
+                return item.id
+            else:
+                return item
+        values = dict()
+        for column, field in columns.iteritems():
+            if field.type not in ('many2many', 'one2many') and not \
+                    field.compute:
+                for item in itertools.chain(src_mode_rows, [dst_mode_row]):
+                    if item[column]:
+                        values[column] = write_serializer(column, item[column])
+        values.pop('id', None)
+        parent_id = values.pop('parent_id', None)
+        dst_mode_row.write(values)
+        if parent_id and parent_id != dst_mode_row.id:
+            try:
+                dst_mode_row.write({'parent_id': parent_id})
+            except Exception as excption:
+                raise UserError( '''Skip recursive mode_row hierarchies 
+                for parent_id %s of mode_row: %s''', parent_id, dst_mode_row.id)
+        return []
+
+    def merge(self, src_mode_rows, dst_mode_row=None, model_name='', table_name=''):
+        proxy = self.env[model_name]
+        mode_row_bad = []
+        mode_row_bad += self._update_foreign_keys(src_mode_rows, dst_mode_row, model_name=model_name, table_name=table_name)
+        mode_row_bad += self._update_reference_fields(src_mode_rows, dst_mode_row, model_name=model_name, table_name=table_name)
+        mode_row_bad += self._update_values(src_mode_rows, dst_mode_row, model_name=model_name, table_name=table_name)
+        mode_row_bad = set(mode_row_bad)
+        for mode_row in src_mode_rows:
+            if mode_row.id not in mode_row_bad:
+                mode_row.write({'active': False})
+        return True
+
+    def _get_ordered_mode_row(self, mode_row_ids, model_name='', table_name=''):
+        mode_rows = self.env[model_name].browse(list(mode_row_ids))
+        ordered_mode_rows = sorted(
+            sorted(mode_rows, key=operator.attrgetter('create_date'),
+                   reverse=True),
+            key=operator.attrgetter(
+                'active'),
+            reverse=True)
+        return ordered_mode_rows
+
+    def merge_cb(self):
+        self.ensure_one()
+        context = {'active_test': False}
+        model_name = 'res.partner'
+        table_name = 'res_partner'
+
+        partner_from = self.env[model_name].search([('id', '=', self.partner_from)])
+        partner_to = self.env[model_name].search([('id', '=', self.partner_to)])
+        if not partner_from.id:
+            raise UserError(u"弃用客户ID不存在！")
+        if not partner_to.id:
+            raise UserError(u"被保留客户ID不存在！")
+        local_time = self.env['res.users'].get_now_pyzt_utc_to_local(datetime.now().strftime(FORMATTIME), FORMATTIME)
+        self.operation_log = u"本次操作人%s,操作时间%s，客户从%s 合并到 %s" % (self.env.user.name, local_time,
+                                                             partner_from.name, partner_to.name)
+        self.with_context(context).merge([partner_from], dst_mode_row=partner_to,
+                                         model_name=model_name, table_name=table_name)
+        return True
+
+```
