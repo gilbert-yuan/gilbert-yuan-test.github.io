@@ -1,0 +1,16 @@
+
+## 优化sql
+在实际的写sql的过程中经常会出现sql执行速度慢的情况，这个时候就需要根据数据量（sql实际的执行环境进行分析找出问题所在）
+
+这个时候EXPLAIN 命令就显得格外重要
+![示例图](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/jpg/WeChat3d8bfd9b54fa450572d28160260b3d97.png)
+感兴趣的可以根据实际情况试试（下面是odoo的一个小示例-不保证能在你的odoo数据库中正常运行）
+```sql
+explain(
+SELECT jc.name,jpd.sale_name  FROM jd_category jc
+LEFT JOIN jd_product jp ON jp.category_id = jc.id
+  LEFT JOIN jd_product_dimensions jpd ON jpd.sim_id=jp.sim_id
+  WHERE jpd.sale_name IS NOT NULL AND jpd.sale_name <> ''
+ GROUP BY jc.name,jpd.sale_name);
+
+```
