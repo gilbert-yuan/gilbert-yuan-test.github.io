@@ -93,3 +93,34 @@
         return data
 
 ```
+
+上面代码涉及到了常用的方法
+
+下面在列举一些常用的方法
+
+```
+    @convert_range_args
+    def merge_range(self, first_row, first_col, last_row, last_col,
+                    data, cell_format=None):
+        """
+        Merge a range of cells.
+
+        Args:
+            first_row:    The first row of the cell range. (zero indexed).
+            first_col:    The first column of the cell range.
+            last_row:     The last row of the cell range. (zero indexed).
+            last_col:     The last column of the cell range.
+            data:         Cell data.
+            cell_format:  Cell Format object.
+
+        Returns:
+             0:    Success.
+            -1:    Row or column is out of worksheet bounds.
+            other: Return value of write().
+
+        """
+
+
+```
+
+
