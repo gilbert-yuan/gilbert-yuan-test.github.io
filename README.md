@@ -9,7 +9,8 @@
 |🌟🌟🌟|[VUX 作为前端配置出手机端页面](https://github.com/gilbert-yuan/odoo_mobile)| 也是本人写的，推荐理由开创odoo提供API 直接配置出一个前端，方便手机中显示，不足之处，页面不够美观，个别操作不是很方便|
 |🌟🌟🌟|[根据单据信息显示删除新建编辑等按钮](https://github.com/gilbert-yuan/odoo_patch)| 通过配置实现在页面上控制编辑、新建、删除等的按钮 为新手提供odoo加载的思路|
 
-[odoo集群初步（一）](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo-redis-集群初步.md)
+[odoo集群初步（一）](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo-redis-集群初步.md) 
+
 [odoo中自动化任务中的问题](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo中自动化任务中的问题.md)
 
 [odoo中wkhtmltopdf的分页处理](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo%E4%B8%ADwkhtmltopdf%E7%9A%84%E5%88%86%E9%A1%B5%E5%A4%84%E7%90%86.md)
