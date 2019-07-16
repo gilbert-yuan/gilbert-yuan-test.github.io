@@ -1,6 +1,6 @@
  ### 要开启多work 
  #### 首先` proxy_mode= True` 需要打开并且配置 `longpolling_port = 8072 ` 其次才是`works = 4`
- #### works 个数和核心数比例  N*2 + 1
+ #### works 个数和核心数比例  --workers=$[1+$CORES*2]
  
  
  
