@@ -39,7 +39,7 @@
 
 [微信读书app上有很多免费的书可以读偶尔看 python数据指南实践 特来拓展下](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/python数据指南实践-小例子.md)
 
-[第一个shell脚本 实现运行在{8069}端口号的程序关闭](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/shell脚本(实现运行在%7B8069%7D端口号的程序关闭.md)
+[第一个shell脚本 实现运行在{8069}端口号的程序关闭](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/shell脚本实现运行在%7B8069%7D端口号的程序关闭.md)
 
 [提示音网站](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/提示音网站.md)
 
