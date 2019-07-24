@@ -46,3 +46,10 @@
 [尝试写考勤部分测试文档](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/测试文档.md)
 
 [转载--odoo中docker的应用实验](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/转载-odoo中docker的应用实验.md)
+[odoo 多work nginx 配置](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo%20%E5%A4%9Awork%20nginx%20%E9%85%8D%E7%BD%AE.md)
+
+[python3-ubuntu 必须安装的包](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo-python3%E5%BF%85%E9%A1%BB%E5%AE%89%E8%A3%85%E7%9A%84%E5%8C%85.md)
+
+[odoo10-前端需要改进的点和部分解决代码](https://github.com/gilbert-yuan/gilbert-yuan.github.io/blob/master/odoo10-%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E6%94%B9%E8%BF%9B%E7%9A%84%E7%82%B9%EF%BC%8C%E5%92%8C%E9%83%A8%E5%88%86%E8%A7%A3%E5%86%B3%E4%BB%A3%E7%A0%81.md)
+
+
